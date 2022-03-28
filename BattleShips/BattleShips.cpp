@@ -11,18 +11,18 @@ int main()
 {
     //YOU CANT CHANGE OTHER PLAYERS BOARD FROM THE GUESS FUNCTIONS
 
-    Player player;
-    AI ai;
+    AI* ai = new AI();
+    Player *player = new Player();
 
-    player.CreatePlayerBoard();
-    ai.GenerateAIBoard();
+    player->CreatePlayerBoard();
+    ai->GenerateAIBoard();
 
     while (true)
     {
-        ai.PrintAIBoard();
-        player.PrintPlayerBoard();
-        player.PlayerGuess();
-        ai.AIGuess();
+        ai->PrintAIBoard();
+        player->PrintPlayerBoard();
+        player->PlayerGuess(ai);
+        ai->AIGuess(player);
         system("cls");
     }
 

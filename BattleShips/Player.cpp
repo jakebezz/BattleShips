@@ -5,6 +5,8 @@
 #include <iostream>
 using namespace std;
 
+Player::Player(){}
+
 void Player::CreatePlayerBoard()
 {
     //Variables for placing battleships
@@ -297,9 +299,8 @@ void Player::PrintPlayerBoard()
 }
 
 //Function for the players turn
-void Player::PlayerGuess()
+void Player::PlayerGuess(AI* ai)
 {
-    AI ai;
     //Ints for players guess
     int xGuess, yGuess;
     //MAKE THIS END GAME IF IT REACHES THE TOTAL AMOUNT OF SHIP HITS POSSIBLE (17)!!!!!
@@ -317,16 +318,18 @@ void Player::PlayerGuess()
     while (playerTurn)
     {
         //Checks if the location on the AI board is the ship char
-        if (ai.aiBoardArr[yGuess][xGuess] == '@')
+        if (ai->aiBoardArr[yGuess][xGuess] == '@')
         {
             cout << "HIT!" << endl;
-            ai.showBoard[yGuess][xGuess] = 'X';
+            //ai->showBoard[yGuess][xGuess] = 'X';
+            ai->aiBoardArr[yGuess][xGuess] = 'X';
             shipHit++;
         }
         else
         {
             cout << "MISS!" << endl;
-            ai.showBoard[yGuess][xGuess] = 'M';
+            //ai->showBoard[yGuess][xGuess] = 'M';
+            ai->aiBoardArr[yGuess][xGuess] = 'M';
             playerTurn = false;
         }
     }

@@ -1,7 +1,14 @@
 #pragma once
+#ifndef AI_H
+#define AI_H
+#include "Player.h"
 class AI
 {
-private:
+public:
+    AI();
+
+    Player player;
+
     //AI Guessing, outside of the function so they're not changed when the function is called
     //int for the While loops
     int shipHit = 0;
@@ -13,7 +20,6 @@ private:
     //Int for checking if the ai has checked that direction before, each number is a different direction
     int lastCheckDir = 0;
 
-public:
     //Arrays for the AI board, show board is the one the player will see
     char aiBoardArr[11][11];
     char showBoard[11][11];
@@ -23,6 +29,7 @@ public:
 
     void GenerateAIBoard();
     void PrintAIBoard();
-    void AIGuess();
+    void AIGuess(Player* player);
 };
+#endif // !AI_H
 

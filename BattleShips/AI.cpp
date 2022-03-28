@@ -5,6 +5,8 @@
 #include <iostream>
 using namespace std;
 
+AI::AI(){}
+
 void AI::GenerateAIBoard()
 {
     //Random number generator
@@ -32,6 +34,15 @@ void AI::GenerateAIBoard()
         for (int j = 0; j < 11; j++)
         {
             showBoard[i][j] = '-';
+        }
+    }
+
+    //FOR TESTING DELETE THIS
+    for (int i = 0; i < 11; i++)
+    {
+        for (int j = 0; j < 11; j++)
+        {
+            aiBoardArr[i][j] = '-';
         }
     }
 
@@ -102,6 +113,10 @@ void AI::GenerateAIBoard()
                             {
                                 canPlace = true;
                             }
+                            else if (aiBoardArr[yCoord - i][xCoord] == '@')
+                            {
+                                canPlace = false;
+                            }
                         }
                         //Places the ships on the board
                         if (canPlace == true)
@@ -133,6 +148,10 @@ void AI::GenerateAIBoard()
                             if (aiBoardArr[yCoord][xCoord + i] != '@')
                             {
                                 canPlace = true;
+                            }
+                            else if (aiBoardArr[yCoord - i][xCoord] == '@')
+                            {
+                                canPlace = false;
                             }
                         }
                         if (canPlace == true)
@@ -240,7 +259,8 @@ void AI::PrintAIBoard()
             }
             else
             {
-                cout << showBoard[i][j];
+                cout << aiBoardArr[i][j];
+                //cout << showBoard[i][j];
             }
         }
         cout << "\n";
@@ -248,9 +268,8 @@ void AI::PrintAIBoard()
 }
 
 //Function for the AIs guessing
-void AI::AIGuess()
+void AI::AIGuess(Player* player)
 {
-    Player player;
     srand((unsigned)time(0));
 
     bool aiTurn = true;
@@ -265,17 +284,17 @@ void AI::AIGuess()
                 //For loop that will keep going in one direction until it misses a ship
                 for (int i = 1; i < 6; i++)
                 {
-                    if (player.playerBoardArr[origY][origX + i] == '@')
+                    if (player->playerBoardArr[origY][origX + i] == '@')
                     {
                         cout << "HIT!" << endl;
                         cout << "X + 1" << endl;
-                        player.playerBoardArr[origY][origX + i] = 'X';
+                        player->playerBoardArr[origY][origX + i] = 'X';
                     }
                     else
                     {
                         cout << "MISS!" << endl;
                         cout << "X + 1" << endl;
-                        player.playerBoardArr[origY][origX + i] = 'M';
+                        player->playerBoardArr[origY][origX + i] = 'M';
                         //reset variables
                         origX = 0;
                         origY = 0;
@@ -291,17 +310,17 @@ void AI::AIGuess()
             {
                 for (int i = 1; i < 6; i++)
                 {
-                    if (player.playerBoardArr[origY][origX + i] == '@')
+                    if (player->playerBoardArr[origY][origX + i] == '@')
                     {
                         cout << "HIT!" << endl;
                         cout << "X + 1" << endl;
-                        player.playerBoardArr[origY][origX + i] = 'X';
+                        player->playerBoardArr[origY][origX + i] = 'X';
                     }
                     else
                     {
                         cout << "MISS!" << endl;
                         cout << "X + 1" << endl;
-                        player.playerBoardArr[origY][origX + i] = 'M';
+                        player->playerBoardArr[origY][origX + i] = 'M';
                         origX = 0;
                         origY = 0;
                         lastCheckDir = 0;
@@ -316,18 +335,18 @@ void AI::AIGuess()
             {
                 for (int i = 1; i < 6; i++)
                 {
-                    if (player.playerBoardArr[origY + i][origX] == '@')
+                    if (player->playerBoardArr[origY + i][origX] == '@')
                     {
                         cout << "HIT!" << endl;
                         cout << "Y + 1" << endl;
-                        player.playerBoardArr[origY + i][origX] = 'X';
+                        player->playerBoardArr[origY + i][origX] = 'X';
                         lastCheckDir = 3;
                     }
                     else
                     {
                         cout << "MISS!" << endl;
                         cout << "Y + 1" << endl;
-                        player.playerBoardArr[origY + i][origX] = 'M';
+                        player->playerBoardArr[origY + i][origX] = 'M';
                         origX = 0;
                         origY = 0;
                         lastCheckDir = 0;
@@ -342,11 +361,11 @@ void AI::AIGuess()
             {
                 for (int i = 1; i < 6; i++)
                 {
-                    if (player.playerBoardArr[origY - i][origX] == '@')
+                    if (player->playerBoardArr[origY - i][origX] == '@')
                     {
                         cout << "HIT!" << endl;
                         cout << "Y - 1" << endl;
-                        player.playerBoardArr[origY - i][origX] = 'X';
+                        player->playerBoardArr[origY - i][origX] = 'X';
                         lastCheckDir = 2;
                         continue;
                     }
@@ -354,7 +373,7 @@ void AI::AIGuess()
                     {
                         cout << "MISS!" << endl;
                         cout << "Y - 1" << endl;
-                        player.playerBoardArr[origY - i][origX] = 'M';
+                        player->playerBoardArr[origY - i][origX] = 'M';
                         origX = 0;
                         origY = 0;
                         lastCheckDir = 0;
@@ -372,11 +391,11 @@ void AI::AIGuess()
             int guessX = (rand() % 10) + 1;
             int guessY = (rand() % 10) + 1;
 
-            if (player.playerBoardArr[guessY][guessX] == '@')
+            if (player->playerBoardArr[guessY][guessX] == '@')
             {
                 //If the AI hits a ship, change the "@" on the players board to a "X"
                 cout << "HIT!" << endl;
-                player.playerBoardArr[guessY][guessX] = 'X';
+                player->playerBoardArr[guessY][guessX] = 'X';
                 origX = guessX;
                 origY = guessY;
                 shipHit++;
@@ -389,16 +408,16 @@ void AI::AIGuess()
                 {
                     for (int i = 1; i < 6; i++)
                     {
-                        if (player.playerBoardArr[guessY][guessX - i] == '@')
+                        if (player->playerBoardArr[guessY][guessX - i] == '@')
                         {
                             cout << "HIT!" << endl;
                             cout << "X - 1" << endl;
-                            player.playerBoardArr[guessY][guessX - i] = 'X';
+                            player->playerBoardArr[guessY][guessX - i] = 'X';
                             lastCheckDir = 1;
                         }
-                        else if (player.playerBoardArr[guessY][guessX - i] == 'X')
+                        else if (player->playerBoardArr[guessY][guessX - i] == 'X')
                         {
-                            player.playerBoardArr[guessY][guessX - i] = 'X';
+                            player->playerBoardArr[guessY][guessX - i] = 'X';
                             lastCheckDir = 1;
                             aiTurn = false;
                             i = 6;
@@ -407,7 +426,7 @@ void AI::AIGuess()
                         {
                             cout << "MISS!" << endl;
                             cout << "X - 1" << endl;
-                            player.playerBoardArr[guessY][guessX - i] = 'M';
+                            player->playerBoardArr[guessY][guessX - i] = 'M';
                             lastCheckDir = 1;
                             aiTurn = false;
                             i = 6;
@@ -420,16 +439,16 @@ void AI::AIGuess()
                 {
                     for (int i = 1; i < 6; i++)
                     {
-                        if (player.playerBoardArr[guessY][guessX + i] == '@')
+                        if (player->playerBoardArr[guessY][guessX + i] == '@')
                         {
                             cout << "HIT!" << endl;
                             cout << "X + 1" << endl;
-                            player.playerBoardArr[guessY][guessX + i] = 'X';
+                            player->playerBoardArr[guessY][guessX + i] = 'X';
                             lastCheckDir = 2;
                         }
-                        else if (player.playerBoardArr[guessY][guessX + i] == 'X')
+                        else if (player->playerBoardArr[guessY][guessX + i] == 'X')
                         {
-                            player.playerBoardArr[guessY][guessX + i] = 'X';
+                            player->playerBoardArr[guessY][guessX + i] = 'X';
                             lastCheckDir = 2;
                             aiTurn = false;
                             i = 6;
@@ -438,7 +457,7 @@ void AI::AIGuess()
                         {
                             cout << "MISS!" << endl;
                             cout << "X + 1" << endl;
-                            player.playerBoardArr[guessY][guessX + i] = 'M';
+                            player->playerBoardArr[guessY][guessX + i] = 'M';
                             lastCheckDir = 2;
                             aiTurn = false;
                             i = 6;
@@ -451,16 +470,16 @@ void AI::AIGuess()
                 {
                     for (int i = 1; i < 6; i++)
                     {
-                        if (player.playerBoardArr[guessY - i][guessX] == '@')
+                        if (player->playerBoardArr[guessY - i][guessX] == '@')
                         {
                             cout << "HIT!" << endl;
                             cout << "Y - 1" << endl;
-                            player.playerBoardArr[guessY - i][guessX] = 'X';
+                            player->playerBoardArr[guessY - i][guessX] = 'X';
                             lastCheckDir = 3;
                         }
-                        else if (player.playerBoardArr[guessY - i][guessX] == 'X')
+                        else if (player->playerBoardArr[guessY - i][guessX] == 'X')
                         {
-                            player.playerBoardArr[guessY - i][guessX] = 'X';
+                            player->playerBoardArr[guessY - i][guessX] = 'X';
                             lastCheckDir = 3;
                             aiTurn = false;
                             i = 6;
@@ -469,7 +488,7 @@ void AI::AIGuess()
                         {
                             cout << "MISS!" << endl;
                             cout << "Y - 1" << endl;
-                            player.playerBoardArr[guessY - i][guessX] = 'M';
+                            player->playerBoardArr[guessY - i][guessX] = 'M';
                             lastCheckDir = 3;
                             aiTurn = false;
                             i = 6;
@@ -482,16 +501,16 @@ void AI::AIGuess()
                 {
                     for (int i = 1; i < 6; i++)
                     {
-                        if (player.playerBoardArr[guessY + i][guessX] == '@')
+                        if (player->playerBoardArr[guessY + i][guessX] == '@')
                         {
                             cout << "HIT!" << endl;
                             cout << "Y + 1" << endl;
-                            player.playerBoardArr[guessY + i][guessX] = 'X';
+                            player->playerBoardArr[guessY + i][guessX] = 'X';
                             lastCheckDir = 4;
                         }
-                        else if (player.playerBoardArr[guessY][guessX - i] == 'X')
+                        else if (player->playerBoardArr[guessY][guessX - i] == 'X')
                         {
-                            player.playerBoardArr[guessY + i][guessX] = 'X';
+                            player->playerBoardArr[guessY + i][guessX] = 'X';
                             lastCheckDir = 4;
                             aiTurn = false;
                             i = 6;
@@ -500,7 +519,7 @@ void AI::AIGuess()
                         {
                             cout << "MISS!" << endl;
                             cout << "Y + 1" << endl;
-                            player.playerBoardArr[guessY + i][guessX] = 'M';
+                            player->playerBoardArr[guessY + i][guessX] = 'M';
                             lastCheckDir = 4;
                             aiTurn = false;
                             i = 6;
@@ -509,15 +528,15 @@ void AI::AIGuess()
                     continue;
                 }
             }
-            else if (player.playerBoardArr[guessY][guessX] == 'X')
+            else if (player->playerBoardArr[guessY][guessX] == 'X')
             {
-                player.playerBoardArr[guessY][guessX] = 'X';
+                player->playerBoardArr[guessY][guessX] = 'X';
                 continue;
             }
             else
             {
                 cout << "MISS!" << endl;
-                player.playerBoardArr[guessY][guessX] = 'M';
+                player->playerBoardArr[guessY][guessX] = 'M';
                 aiTurn = false;
                 continue;
             }

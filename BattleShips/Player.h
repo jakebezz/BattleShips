@@ -1,7 +1,16 @@
 #pragma once
+#ifndef Player_H
+#define Player_H
+
+class AI;
+
 class Player
 {
 public:
+
+    AI* pAI;
+
+    Player();
     //Variables for the players board
     char playerBoardArr[11][11];
     //Creates numbers around the border
@@ -14,6 +23,6 @@ public:
     //Creation of the functions
     void CreatePlayerBoard();
     void PrintPlayerBoard();
-    void PlayerGuess();
+    void PlayerGuess(AI* ai);
 };
-
+#endif // !Player_H
