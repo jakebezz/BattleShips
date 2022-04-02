@@ -23,6 +23,6 @@ public:
     //Creation of the functions
     void CreatePlayerBoard();
     void PrintPlayerBoard();
-    void PlayerGuess(AI* ai);
+    void PlayerGuess();
 };
 #endif // !Player_H

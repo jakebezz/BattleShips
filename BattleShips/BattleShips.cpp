@@ -9,7 +9,15 @@ using namespace std;
 
 int main()
 {
-    //YOU CANT CHANGE OTHER PLAYERS BOARD FROM THE GUESS FUNCTIONS
+    /// <summary>
+    /// TO DO LIST:
+    /// - Fix placement so it more consistently detects if they are overlapping
+    /// - Fix player guessing so it prints X when hitting the enemy ship
+    /// - Fix the 10th row pushing the line to the right
+    /// - Pretty up with menu and UI
+    /// - Add an easy AI mode so it just guesses random places
+    /// </summary>
+    /// <returns></returns>
 
     AI* ai = new AI();
     Player *player = new Player();
@@ -21,8 +29,8 @@ int main()
     {
         ai->PrintAIBoard();
         player->PrintPlayerBoard();
-        player->PlayerGuess(ai);
-        ai->AIGuess(player);
+        player->PlayerGuess();
+        ai->AIGuess();
         system("cls");
     }
 

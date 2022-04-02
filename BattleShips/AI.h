@@ -1,13 +1,12 @@
 #pragma once
 #ifndef AI_H
 #define AI_H
-#include "Player.h"
 class AI
 {
 public:
     AI();
 
-    Player player;
+    Player *pPlayer;
 
     //AI Guessing, outside of the function so they're not changed when the function is called
     //int for the While loops
@@ -29,7 +28,7 @@ public:
 
     void GenerateAIBoard();
     void PrintAIBoard();
-    void AIGuess(Player* player);
+    void AIGuess();
 };
 #endif // !AI_H
 

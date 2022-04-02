@@ -299,7 +299,7 @@ void Player::PrintPlayerBoard()
 }
 
 //Function for the players turn
-void Player::PlayerGuess(AI* ai)
+void Player::PlayerGuess()
 {
     //Ints for players guess
     int xGuess, yGuess;
@@ -318,18 +318,18 @@ void Player::PlayerGuess(AI* ai)
     while (playerTurn)
     {
         //Checks if the location on the AI board is the ship char
-        if (ai->aiBoardArr[yGuess][xGuess] == '@')
+        if (pAI->aiBoardArr[yGuess][xGuess] == '@')
         {
             cout << "HIT!" << endl;
             //ai->showBoard[yGuess][xGuess] = 'X';
-            ai->aiBoardArr[yGuess][xGuess] = 'X';
+            pAI->aiBoardArr[yGuess][xGuess] = 'X';
             shipHit++;
         }
         else
         {
             cout << "MISS!" << endl;
             //ai->showBoard[yGuess][xGuess] = 'M';
-            ai->aiBoardArr[yGuess][xGuess] = 'M';
+            pAI->aiBoardArr[yGuess][xGuess] = 'M';
             playerTurn = false;
         }
     }
