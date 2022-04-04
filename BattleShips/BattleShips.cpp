@@ -30,7 +30,7 @@ int main()
         ai->PrintAIBoard();
         player->PrintPlayerBoard();
         player->PlayerGuess();
-        ai->AIGuess();
+        ai->AIGuess(player);
         system("cls");
     }
 

@@ -103,13 +103,17 @@ void Player::CreatePlayerBoard()
                 }
                 else
                 {
-                    //DOESNT WORK!!!! Is to stop ships overlapping
+                    //Checks if ships are overlapping, if they're not the ship can place
                     bool canPlace = false;
                     for (int i = 0; i < length; i++)
                     {
                         if (playerBoardArr[yCoord - i][xCoord] != '@')
                         {
                             canPlace = true;
+                        }
+                        else
+                        {
+                            canPlace = false;
                             break;
                         }
                     }
@@ -148,6 +152,10 @@ void Player::CreatePlayerBoard()
                         if (playerBoardArr[yCoord][xCoord + i] != '@')
                         {
                             canPlace = true;
+                        }
+                        else
+                        {
+                            canPlace = false;
                             break;
                         }
                     }
@@ -186,6 +194,10 @@ void Player::CreatePlayerBoard()
                         if (playerBoardArr[yCoord + i][xCoord] != '@')
                         {
                             canPlace = true;
+                        }
+                        else
+                        {
+                            canPlace = false;
                             break;
                         }
                     }
@@ -224,6 +236,10 @@ void Player::CreatePlayerBoard()
                         if (playerBoardArr[yCoord][xCoord - i] != '@')
                         {
                             canPlace = true;
+                        }
+                        else
+                        {
+                            canPlace = false;
                             break;
                         }
                     }
