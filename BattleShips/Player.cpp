@@ -320,6 +320,8 @@ void Player::PlayerGuess(AI* ai)
     //Ints for players guess
     int xGuess, yGuess;
 
+    cout << "Player Hits: " << shipHits << endl;
+
     cout << "Guess X: ";
     cin >> xGuess;
     cout << endl;
