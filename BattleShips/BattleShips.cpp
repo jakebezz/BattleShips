@@ -9,20 +9,12 @@ using namespace std;
 
 int main()
 {
-    /// <summary>
-    /// TO DO LIST:
-    /// - Pretty up with menu and UI
-    /// - Game end when either players ships are destoryed
-    /// - Bug fixes
-    /// </summary>
-    /// <returns></returns>
-
     AI* ai = new AI();
     Player* player = new Player();
 
     bool gameRun = true;
     while (gameRun)
-    {
+    {        
         //Title screen
         cout << " ____       _______ _______ _      ______  _____ _    _ _____ _____   _____ " << endl;
         cout << "|  _ \\   /\\|__   __|__   __| |    |  ____|/ ____| |  | |_   _|  __ \\ / ____|" << endl;
@@ -44,7 +36,7 @@ int main()
             ai->GenerateAIBoard();
 
             //Player and AI keep guessing until one of them hits all their opponents ships
-            while (player->shipHits < 17 || ai->shipHits < 17)
+            while (gameRun)
             {
                 ai->PrintAIBoard();
                 cout << endl;
@@ -52,10 +44,14 @@ int main()
                 player->PlayerGuess(ai);
                 ai->AIGuessEasy(player);
                 system("cls");
+
+                if (player->shipHits == 17 || ai->shipHits == 17)
+                {
+                    gameRun = false;
+                }
             }
             //Sets gameRun to false so endscreen can be shown
-            gameRun = false;
-            system("cls");
+            
         }
         //Hard Mode
         else if (input == "2")
@@ -63,16 +59,19 @@ int main()
             player->CreatePlayerBoard();
             ai->GenerateAIBoard();
 
-            while (player->shipHits < 16 || ai->shipHits < 16)
+            while (gameRun)
             {
                 ai->PrintAIBoard();
                 player->PrintPlayerBoard();
                 player->PlayerGuess(ai);
                 ai->AIGuessHard(player);
                 system("cls");
+
+                if (player->shipHits == 17 || ai->shipHits == 17)
+                {
+                    gameRun = false;
+                }
             }
-            gameRun = false;
-            system("cls");
         }
         else
         {
@@ -84,11 +83,22 @@ int main()
         }
     }
 
+    //Gameover screen
     cout << "  _____          __  __ ______    ______      ________ _____ " << endl;
     cout << " / ____|   /\\   |  \\/  |  ____|  / __ \\ \\    / /  ____|  __ \\ " << endl;
     cout << "| |  __   /  \\  | \\  / | |__    | |  | \\ \\  / /| |__  | |__) |" << endl;
-    cout << "| | |_ | / /\\ \\ | |\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / " << endl;
+    cout << "| | |_ | / /\\ \\ |  |\/| |  __|   | |  | |\\ \\/ / |  __| |  _  / " << endl;
     cout << "| |__| |/ ____ \\| |  | | |____  | |__| | \\  /  | |____| | \\ \\ " << endl;
-    cout << " \\_____/_/    \\_\\_|  |_|______|  \____/   \\/   |______|_|  \\_\\ " << endl;
+    cout << " \\_____/_/    \\_\\_|  |_|______|  \\____/   \\/   |______|_|  \\_\\ " << endl;
 
+    if(player->shipHits == 17)
+    {
+        cout << "CONGRATULATIONS!!!" << endl;
+        cout << "YOU BEAT AN AI WITH THE INTELLIGENCE OF AN 8 YEAR OLD!";
+    }
+    else
+    {
+        cout << "YOU LOST TO AN AI WITH THE INTELLIGENCE OF AN 8 YEAR OLD!" << endl;
+        cout << "This Battleship grind is not for you...";
+    }
 }

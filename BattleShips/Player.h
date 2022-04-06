@@ -3,12 +3,12 @@
 #ifndef Player_H
 #define Player_H
 
+//Constuctor so Player can access AI (alternative for using #incluide "AI.h" but that broke the code)
 class AI;
 
 class Player
 {
 public:
-
     Player();
     //Variables for the players board
     char playerBoardArr[11][11];
@@ -19,7 +19,7 @@ public:
     //Int used for the While loop and for Switch used for the order of placing the ships
     int shipNumber = 1;
 
-    //Used for the while loop, game will stop if this reaches 17
+    //Int for Ship Hits, when this reacher 17(total ship parts for each player) the game will end
     int shipHits = 0;
 
     //Creation of the functions

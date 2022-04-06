@@ -59,6 +59,13 @@ void Player::CreatePlayerBoard()
 
         cout << "Where do you want to place your " << length << " length ship?:" << endl;
 
+        //Checks that player put in an int. (honestly dont know how it works but it works :) )
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+        }
+
         //X axis start position
         cout << "Input X Position (1 - 10): ";
         cin >> xCoord;
@@ -68,6 +75,13 @@ void Player::CreatePlayerBoard()
         cout << "Input Y Postition (1 - 10): ";
         cin >> yCoord;
         cout << endl;
+
+        if (xCoord > 10 || xCoord < 1 || yCoord > 10 || yCoord < 1)
+        {
+            cout << "Please enter a valid input" << endl;
+            continue;
+        }
+
 
         //Direction ship will build
         cout << "Input Direction of Ship (N, E, S, W): ";
@@ -243,6 +257,11 @@ void Player::CreatePlayerBoard()
                 }
             }
         }
+        else
+        {
+            cout << "Please enter a valid input" << endl;
+            continue;
+        }
 
         //Prints ship to board
         for (int i = 0; i < 11; i++)
@@ -266,9 +285,9 @@ void Player::CreatePlayerBoard()
             }
             cout << "\n";
         }
+        //Increase ship number when ship has been placed
+        shipNumber++;
     }
-    //Increase ship number when ship has been placed
-    shipNumber++;
 }
 
 //Function for printing the players board, this is seperate to the creation so that it can be reprinted with visual changes
@@ -302,25 +321,38 @@ void Player::PlayerGuess(AI* ai)
     //Ints for players guess
     int xGuess, yGuess;
 
-    cout << "Player Hits: " << shipHits << endl;
-
-    cout << "Guess X: ";
-    cin >> xGuess;
-    cout << endl;
-
-    cout << "Guess Y: ";
-    cin >> yGuess;
-    cout << endl;
-
     bool playerTurn = true;
     while (playerTurn)
     {
+        //Checks that player put in an int. (honestly dont know how it works but it works :) )
+        if (cin.fail())
+        {
+            cin.clear();
+            cin.ignore(INT_MAX, '\n');
+        }
+
+        cout << "Player Hits: " << shipHits << endl;
+
+        cout << "Guess X: ";
+        cin >> xGuess;
+        cout << endl;
+
+        cout << "Guess Y: ";
+        cin >> yGuess;
+
+        cout << endl;
+        if (xGuess > 10 || xGuess < 1 || yGuess > 10 || yGuess < 1)
+        {
+            cout << "Please enter a valid input" << endl;
+            continue;
+        }
         //Checks if the location on the AI board is the ship char
         if (ai->aiBoardArr[yGuess][xGuess] == '@')
         {
             cout << "HIT!" << endl;
             ai->showBoard[yGuess][xGuess] = 'X';
-            //ai->aiBoardArr[yGuess][xGuess] = 'X';
+            //Sets the board not shown to X too so that if the player guess' there again it doesnt count as a hit
+            ai->aiBoardArr[yGuess][xGuess] = 'X';
             shipHits++;
             playerTurn = false;
         }
@@ -328,7 +360,6 @@ void Player::PlayerGuess(AI* ai)
         {
             cout << "MISS!" << endl;
             ai->showBoard[yGuess][xGuess] = 'M';
-            //ai->aiBoardArr[yGuess][xGuess] = 'M';
             playerTurn = false;
         }
     }
