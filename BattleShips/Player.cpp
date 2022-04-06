@@ -268,12 +268,12 @@ void Player::CreatePlayerBoard()
                     //If Y is 0, print the X numbers
                     if (j == 0)
                     {
-                        cout << numberBoardX[i];
+                        cout << numberboardX[i];
                     }
                     //If X is 0, print the Y numbers
                     else if (i == 0)
                     {
-                        cout << numberBoardY[j];
+                        cout << numberboardY[j];
                     }
                     else
                     {
@@ -299,11 +299,11 @@ void Player::PrintPlayerBoard()
         {
             if (j == 0)
             {
-                cout << numberBoardX[i];
+                cout << numberboardX[i];
             }
             else if (i == 0)
             {
-                cout << numberBoardY[j];
+                cout << numberboardY[j];
             }
             else
             {
@@ -315,12 +315,10 @@ void Player::PrintPlayerBoard()
 }
 
 //Function for the players turn
-void Player::PlayerGuess()
+void Player::PlayerGuess(AI* ai)
 {
     //Ints for players guess
     int xGuess, yGuess;
-    //MAKE THIS END GAME IF IT REACHES THE TOTAL AMOUNT OF SHIP HITS POSSIBLE (17)!!!!!
-    int shipHit = 0;
 
     cout << "Guess X: ";
     cin >> xGuess;
@@ -334,18 +332,19 @@ void Player::PlayerGuess()
     while (playerTurn)
     {
         //Checks if the location on the AI board is the ship char
-        if (pAI->aiBoardArr[yGuess][xGuess] == '@')
+        if (ai->aiBoardArr[yGuess][xGuess] == '@')
         {
             cout << "HIT!" << endl;
-            //ai->showBoard[yGuess][xGuess] = 'X';
-            pAI->aiBoardArr[yGuess][xGuess] = 'X';
-            shipHit++;
+            ai->showBoard[yGuess][xGuess] = 'X';
+            //ai->aiBoardArr[yGuess][xGuess] = 'X';
+            shipHits++;
+            playerTurn = false;
         }
         else
         {
             cout << "MISS!" << endl;
-            //ai->showBoard[yGuess][xGuess] = 'M';
-            pAI->aiBoardArr[yGuess][xGuess] = 'M';
+            ai->showBoard[yGuess][xGuess] = 'M';
+            //ai->aiBoardArr[yGuess][xGuess] = 'M';
             playerTurn = false;
         }
     }

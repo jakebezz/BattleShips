@@ -11,26 +11,25 @@ int main()
 {
     /// <summary>
     /// TO DO LIST:
-    /// - Fix placement so it more consistently detects if they are overlapping
-    /// - Fix player guessing so it prints X when hitting the enemy ship
-    /// - Fix the 10th row pushing the line to the right
     /// - Pretty up with menu and UI
-    /// - Add an easy AI mode so it just guesses random places
+    /// - Game end when either players ships are destoryed
     /// </summary>
     /// <returns></returns>
 
     AI* ai = new AI();
-    Player *player = new Player();
+    Player* player = new Player();
+
+
 
     player->CreatePlayerBoard();
     ai->GenerateAIBoard();
 
-    while (true)
+    while (player->shipHits < 17 || ai->shipHits < 17)
     {
         ai->PrintAIBoard();
         player->PrintPlayerBoard();
-        player->PlayerGuess();
-        ai->AIGuess(player);
+        player->PlayerGuess(ai);
+        ai->AIGuessHard(player);
         system("cls");
     }
 

@@ -263,16 +263,16 @@ void AI::PrintAIBoard()
         {
             if (j == 0)
             {
-                cout << numberBoardX[i];
+                cout << numberboardX[i];
             }
             else if (i == 0)
             {
-                cout << numberBoardY[j];
+                cout << numberboardY[j];
             }
             else
             {
-                cout << aiBoardArr[i][j];
-                //cout << showBoard[i][j];
+                //cout << aiBoardArr[i][j];
+                cout << showBoard[i][j];
             }
         }
         cout << "\n";
@@ -280,7 +280,7 @@ void AI::PrintAIBoard()
 }
 
 //Function for the AIs guessing
-void AI::AIGuess(Player* player)
+void AI::AIGuessHard(Player* player)
 {
     srand((unsigned)time(0));
 
@@ -410,7 +410,7 @@ void AI::AIGuess(Player* player)
                 player->playerBoardArr[guessY][guessX] = 'X';
                 origX = guessX;
                 origY = guessY;
-                shipHit++;
+                shipHits++;
 
                 //Random number for the direction the AI guesses
                 int nextGuess = (rand() % 3) + 1;
@@ -552,6 +552,39 @@ void AI::AIGuess(Player* player)
                 aiTurn = false;
                 continue;
             }
+        }
+    }
+}
+
+void AI::AIGuessEasy(Player* player)
+{
+    bool aiTurn = true;
+    while (aiTurn)
+    {
+        //Random numbers for the X and Y coord guess
+        int guessX = (rand() % 10) + 1;
+        int guessY = (rand() % 10) + 1;
+
+        if (player->playerBoardArr[guessY][guessX] == '@')
+        {
+            //If the AI hits a ship, change the "@" on the players board to a "X"
+            cout << "HIT!" << endl;
+            player->playerBoardArr[guessY][guessX] = 'X';
+            origX = guessX;
+            origY = guessY;
+            shipHits++;
+        }
+        else if (player->playerBoardArr[guessY][guessX] == 'X')
+        {
+            player->playerBoardArr[guessY][guessX] = 'X';
+            continue;
+        }
+        else
+        {
+            cout << "MISS!" << endl;
+            player->playerBoardArr[guessY][guessX] = 'M';
+            aiTurn = false;
+            continue;
         }
     }
 }
