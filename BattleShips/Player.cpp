@@ -18,10 +18,6 @@ void Player::CreatePlayerBoard()
     //Input variable
     string input;
 
-    //Temp variables to check that the X and Y location havent been used  before
-    int tempY = 0;
-    int tempX = 0;
-
     //Generates the play board with the base
     for (int i = 0; i < 11; i++)
     {
@@ -35,6 +31,8 @@ void Player::CreatePlayerBoard()
     //While loop to check all ships have been placed
     while (shipNumber <= 5)
     {
+        //Clears console
+        system("cls");
         PrintPlayerBoard();
         //Switch for deciding the length of the ship to be placed
         switch (shipNumber)
@@ -71,222 +69,206 @@ void Player::CreatePlayerBoard()
         cin >> yCoord;
         cout << endl;
 
-        //Stops starting posistion from being used again
-        if (tempX == xCoord && tempY == yCoord)
+        //Direction ship will build
+        cout << "Input Direction of Ship (N, E, S, W): ";
+        cin >> direction;
+        cout << endl;
+
+        //North
+        if (direction == 'N' || direction == 'n')
         {
-            cout << "Cannot place ship in same place";
-            cin;
-            break;
+            //Stops the ships from being placed on the border
+            if (length + 1 > yCoord)
+            {
+                cout << "Ship too long to be placed" << endl;
+                cout << "Press any key to continue" << endl;
+                cin;
+                continue;
+            }
+            else
+            {
+                //Checks if ships are overlapping, if they're not the ship can place
+                bool canPlace = false;
+                for (int i = 0; i < length; i++)
+                {
+                    if (playerBoardArr[yCoord - i][xCoord] != '@')
+                    {
+                        canPlace = true;
+                    }
+                    else
+                    {
+                        canPlace = false;
+                        break;
+                    }
+                }
+                if (canPlace == true)
+                {
+                    for (int i = 0; i < length; i++)
+                    {
+                        playerBoardArr[yCoord - i][xCoord] = '@';
+                    }
+                }
+                else
+                {
+                    cout << "Ship already exists here" << endl;
+                    cout << "Press any key to continue" << endl;
+                    cin;
+                    continue;
+                }
+            }
         }
 
-        else
+        //East
+        else if (direction == 'E' || direction == 'e')
         {
-            //Sets the temp ints to the Coords
-            tempX = xCoord;
-            tempY = yCoord;
-
-            //Direction ship will build
-            cout << "Input Direction of Ship (N, E, S, W): ";
-            cin >> direction;
-            cout << endl;
-
-            //North
-            if (direction == 'N' || direction == 'n')
+            if (length > (11 - xCoord))
             {
-                //Stops the ships from being placed on the border
-                if (length + 1 > yCoord)
+                cout << "Ship too long to be placed" << endl;
+                cout << "Press any key to continue" << endl;
+                cin;
+                continue;
+            }
+            else
+            {
+                bool canPlace = false;
+                for (int i = 0; i < length; i++)
                 {
-                    cout << "Ship too long to be placed" << endl;
+                    if (playerBoardArr[yCoord][xCoord + i] != '@')
+                    {
+                        canPlace = true;
+                    }
+                    else
+                    {
+                        canPlace = false;
+                        break;
+                    }
+                }
+                if (canPlace == true)
+                {
+                    for (int i = 0; i < length; i++)
+                    {
+                        playerBoardArr[yCoord][xCoord + i] = '@';
+                    }
+                }
+                else
+                {
+                    cout << "Ship already exists here" << endl;
                     cout << "Press any key to continue" << endl;
                     cin;
                     continue;
                 }
-                else
-                {
-                    //Checks if ships are overlapping, if they're not the ship can place
-                    bool canPlace = false;
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (playerBoardArr[yCoord - i][xCoord] != '@')
-                        {
-                            canPlace = true;
-                        }
-                        else
-                        {
-                            canPlace = false;
-                            break;
-                        }
-                    }
-                    if (canPlace == true)
-                    {
-                        for (int i = 0; i < length; i++)
-                        {
-                            playerBoardArr[yCoord - i][xCoord] = '@';
-                        }
-                    }
-                    else
-                    {
-                        cout << "Ship already exists here" << endl;
-                        cout << "Press any key to continue" << endl;
-                        cin;
-                        continue;
-                    }
-                }
-            }
-
-            //East
-            else if (direction == 'E' || direction == 'e')
-            {
-                if (length > (11 - xCoord))
-                {
-                    cout << "Ship too long to be placed" << endl;
-                    cout << "Press any key to continue" << endl;
-                    cin;
-                    continue;
-                }
-                else
-                {
-                    bool canPlace = false;
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (playerBoardArr[yCoord][xCoord + i] != '@')
-                        {
-                            canPlace = true;
-                        }
-                        else
-                        {
-                            canPlace = false;
-                            break;
-                        }
-                    }
-                    if (canPlace == true)
-                    {
-                        for (int i = 0; i < length; i++)
-                        {
-                            playerBoardArr[yCoord][xCoord + i] = '@';
-                        }
-                    }
-                    else
-                    {
-                        cout << "Ship already exists here" << endl;
-                        cout << "Press any key to continue" << endl;
-                        cin;
-                        continue;
-                    }
-                }
-            }
-
-            //South
-            else if (direction == 'S' || direction == 's')
-            {
-                if (length > (11 - yCoord))
-                {
-                    cout << "Ship too long to be placed" << endl;
-                    cout << "Press any key to continue" << endl;
-                    cin;
-                    continue;
-                }
-                else
-                {
-                    bool canPlace = false;
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (playerBoardArr[yCoord + i][xCoord] != '@')
-                        {
-                            canPlace = true;
-                        }
-                        else
-                        {
-                            canPlace = false;
-                            break;
-                        }
-                    }
-                    if (canPlace == true)
-                    {
-                        for (int i = 0; i < length; i++)
-                        {
-                            playerBoardArr[yCoord + i][xCoord] = '@';
-                        }
-                    }
-                    else
-                    {
-                        cout << "Ship already exists here" << endl;
-                        cout << "Press any key to continue" << endl;
-                        cin;
-                        continue;
-                    }
-                }
-            }
-
-            //West
-            else if (direction == 'W' || direction == 'w')
-            {
-                if (length + 1 > xCoord)
-                {
-                    cout << "Ship too long to be placed" << endl;
-                    cout << "Press any key to continue" << endl;
-                    cin;
-                    continue;
-                }
-                else
-                {
-                    bool canPlace = false;
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (playerBoardArr[yCoord][xCoord - i] != '@')
-                        {
-                            canPlace = true;
-                        }
-                        else
-                        {
-                            canPlace = false;
-                            break;
-                        }
-                    }
-                    if (canPlace == true)
-                    {
-                        for (int i = 0; i < length; i++)
-                        {
-                            playerBoardArr[yCoord][xCoord - i] = '@';
-                        }
-                    }
-                    else
-                    {
-                        cout << "Ship already exists here" << endl;
-                        cout << "Press any key to continue" << endl;
-                        cin;
-                        continue;
-                    }
-                }
-            }
-
-            //Prints ship to board
-            for (int i = 0; i < 11; i++)
-            {
-                for (int j = 0; j < 11; j++)
-                {
-                    //If Y is 0, print the X numbers
-                    if (j == 0)
-                    {
-                        cout << numberboardX[i];
-                    }
-                    //If X is 0, print the Y numbers
-                    else if (i == 0)
-                    {
-                        cout << numberboardY[j];
-                    }
-                    else
-                    {
-                        cout << playerBoardArr[i][j];
-                    }
-                }
-                cout << "\n";
             }
         }
-        //NEED TO MAKE THIS SO IT ONLY HAPPENS IF SHIP HAS BEEN PLACED
-        shipNumber++;
-        system("cls");
+
+        //South
+        else if (direction == 'S' || direction == 's')
+        {
+            if (length > (11 - yCoord))
+            {
+                cout << "Ship too long to be placed" << endl;
+                cout << "Press any key to continue" << endl;
+                cin;
+                continue;
+            }
+            else
+            {
+                bool canPlace = false;
+                for (int i = 0; i < length; i++)
+                {
+                    if (playerBoardArr[yCoord + i][xCoord] != '@')
+                    {
+                        canPlace = true;
+                    }
+                    else
+                    {
+                        canPlace = false;
+                        break;
+                    }
+                }
+                if (canPlace == true)
+                {
+                    for (int i = 0; i < length; i++)
+                    {
+                        playerBoardArr[yCoord + i][xCoord] = '@';
+                    }
+                }
+                else
+                {
+                    cout << "Ship already exists here" << endl;
+                    cout << "Press any key to continue" << endl;
+                    cin;
+                    continue;
+                }
+            }
+        }
+
+        //West
+        else if (direction == 'W' || direction == 'w')
+        {
+            if (length + 1 > xCoord)
+            {
+                cout << "Ship too long to be placed" << endl;
+                cout << "Press any key to continue" << endl;
+                cin;
+                continue;
+            }
+            else
+            {
+                bool canPlace = false;
+                for (int i = 0; i < length; i++)
+                {
+                    if (playerBoardArr[yCoord][xCoord - i] != '@')
+                    {
+                        canPlace = true;
+                    }
+                    else
+                    {
+                        canPlace = false;
+                        break;
+                    }
+                }
+                if (canPlace == true)
+                {
+                    for (int i = 0; i < length; i++)
+                    {
+                        playerBoardArr[yCoord][xCoord - i] = '@';
+                    }
+                }
+                else
+                {
+                    cout << "Ship already exists here" << endl;
+                    cout << "Press any key to continue" << endl;
+                    cin;
+                    continue;
+                }
+            }
+        }
+
+        //Prints ship to board
+        for (int i = 0; i < 11; i++)
+        {
+            for (int j = 0; j < 11; j++)
+            {
+                //If Y is 0, print the X numbers
+                if (j == 0)
+                {
+                    cout << numberboardX[i];
+                }
+                //If X is 0, print the Y numbers
+                else if (i == 0)
+                {
+                    cout << numberboardY[j];
+                }
+                else
+                {
+                    cout << playerBoardArr[i][j];
+                }
+            }
+            cout << "\n";
+        }
     }
+    //Increase ship number when ship has been placed
+    shipNumber++;
 }
 
 //Function for printing the players board, this is seperate to the creation so that it can be reprinted with visual changes

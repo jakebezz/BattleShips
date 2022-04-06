@@ -13,6 +13,7 @@ int main()
     /// TO DO LIST:
     /// - Pretty up with menu and UI
     /// - Game end when either players ships are destoryed
+    /// - Bug fixes
     /// </summary>
     /// <returns></returns>
 
